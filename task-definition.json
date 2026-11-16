@@ -1,0 +1,40 @@
+{
+  "family": "lumenboard",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "REPLACE_WITH_ECS_TASK_EXECUTION_ROLE_ARN",
+  "containerDefinitions": [
+    {
+      "name": "lumenboard",
+      "image": "IMAGE_URI_IS_SET_BY_WORKFLOW",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "hostPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "repositoryCredentials": {
+        "credentialsParameter": "REPLACE_WITH_DOCKERHUB_SECRET_ARN"
+      },
+      "healthCheck": {
+        "command": ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/health || exit 1"],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 10
+      },
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/lumenboard",
+          "awslogs-region": "REPLACE_WITH_AWS_REGION",
+          "awslogs-stream-prefix": "app"
+        }
+      }
+    }
+  ]
+}
