@@ -20,7 +20,7 @@ env:
   ECS_TASK_EXECUTION_ROLE_ARN: ${{ vars.ECS_TASK_EXECUTION_ROLE_ARN }}
   DOCKERHUB_SECRET_ARN: ${{ vars.DOCKERHUB_SECRET_ARN }}
   IMAGE_NAME: ${{ vars.DOCKERHUB_NAMESPACE }}/lumenboard
-
+  DOCKERHUB_NAMESPACE: ${{ vars.DOCKERHUB_NAMESPACE }}
 jobs:
   quality:
     name: Lint, test, and production build
